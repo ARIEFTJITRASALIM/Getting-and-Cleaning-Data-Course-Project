@@ -1,1 +1,49 @@
+The R script titled run_analysis.R was created as part of the Peer-graded Assignment: Getting and Cleaning Data Course Project. The script performs
+the required actions as per the course requirements.
 
+1. Downloading the data
+  - Data downloaded from "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" and saved with the name UCI HAR Dataset
+  
+2. Assigning a variable name to each dataset:
+  - featuredataset is from features.txt with 561 rows and 2 columns
+  - traindataX is from train/X_train.txt with 7352 rows and 561 columns
+  - traindataY is from train/y_train.txt with 7352 rows and 1 column
+  - traindatasubject is from train/subject_train.txt with 7352 rows and 1 column
+  - testdataX is from test/X_test.txt with 2947 rows and 561 columns
+  - testdataY is from test/y_test.txt with 2947 rows and 1 column
+  - testdatasubject is from test/subject_test.txt with 2947 rows and 1 column
+  - activitylabelsdata is from activity_labels.txt with 6 rows and 2 columns
+
+3. Merging the training and test datasets to create one dataset
+  - Xdataset is created from traindataX and testdataX using the rbind() function and has 10299 rows and 561 columns
+  - Ydataset is created from traindataY and testdataY using the rbind() function and has 10299 rows and 1 column
+  - Subjectdataset is created from traindatasubject and testdatasubject using the rbind() function and has 10299 rows and 1 column
+  - Alldataset is created from Subjectdataset, Ydataset and Xdataset using the cbind() function and has 10299 rows and 563 columns
+
+4. Extract only the measurements on the mean and standard deviation for each measurement
+Meanstddataset is created by subsetting Alldataset and selecting only the following columns:
+  - subject
+  - code
+  - measurements on mean
+  - measurements on standard deviation
+
+5. Use descriptive activity names to name the activities in the data set
+All the numbers in the code column of Meanstddataset is changed with the corresponding activity from the second column of activitylabelsdata.
+
+6. Appropriately label the data set with descriptive variable names
+  - The code column in Meanstddataset is renamed to activities
+  - All Acc in the column name is changed to Accelerometer
+  - All Gyro in the column name is changed to Gyroscope
+  - All BodyBody in the column name is changed to Body
+  - All Mag in the column name is changed to Magnitude
+  - All that starts with the character t in the column name is changed to Time
+  - All that starts with the character f in the column name is changed to Frequency
+
+7. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+Tidydata is created by grouping Meanstddataset by subject and activity and 
+summarising this grouped dataset by taking the mean of each variable for each subject and each activity
+Tidydata has 180 rows and 88 columns
+
+8. Write the final tidy data table
+Tidydata is written / exported into tidydata.txt file.
+  
